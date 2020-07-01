@@ -1,0 +1,38 @@
+---
+
+- name: kubernetes.yml | etcd role
+  hosts: etcd
+  gather_facts: yes
+  pre_tasks:
+    - name: Create directory {{ dirconfig }}/temp
+      file:
+        path: {{ dirconfig }}/temp
+        state: directory
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+        mode: 0755
+      become: yes
+
+  roles:t
+    - { role: etcd, tags: ['binaries','token','services'] }
+
+  post_tasks:
+    - name: Remove {{ dirconfig }}/temp
+      file:
+        path: {{ dirconfig }}/temp
+        state: absent
+
+      #- name: kubernetes.yml | flannel & docker roles
+      #  hosts: master 
+      #  vars:
+      #    - etcd_servers: 172.24.10.210
+      #    - flannel_network: 172.24.0.0/16
+      #
+      #  roles:
+      #    - { role: flannel, tags: ["binaries","services"] }
+
+      #- name: kubernetes.yml | kube-master role
+      #  hosts: master
+      #
+      #  roles:
+      #    - { role: kube-master, tags: ["binaries","token","services"] }

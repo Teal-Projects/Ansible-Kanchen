@@ -1,0 +1,32 @@
+---
+- name: kubernetes.yml | etcd role
+  hosts: master #etcd
+
+  roles:
+    - { role: etcd, tags: ["binaries","token","services"] }
+
+- name: kubernetes.yml | flannel & docker roles 
+  hosts: master & worker
+  
+  roles:
+    - { role: flannel, tags: ["binaries","services"] }
+    - { role: docker, tags: ["binaries","services"] }
+
+- name: kubernetes.yml | kube-master role
+  hosts: master
+
+  roles:
+    - { role: kube-master, tags: ["binaries","token","services"] }
+
+- name: kubernetes.yml | kube-worker role
+  hosts: worker
+
+  roles:
+    - { role: kube-worker, tags: ["binaries","services"] }
+
+# TODO
+#
+# 1) VAULT
+# - Install by binaries
+# - Configure backend etcd
+# - Generate Kubernetes token

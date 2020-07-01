@@ -1,0 +1,17 @@
+cur-vm31:
+   hosts:
+     etcd:
+       ansible_ssh_host: 172.24.10.210
+       ansible_user: cur
+       ansible_password: cur
+       hostname: etcd
+cur-vm32:
+   hosts:
+     master:
+       ansible_ssh_host: 172.24.10.211
+       ansible_user: cur
+       ansible_password: cur
+       hostname: master
+
+
+# sudo apt-get purge -y python-docker python-dockerpycreds golang-docker-credential-helpers docker-ce-cli docker-ce

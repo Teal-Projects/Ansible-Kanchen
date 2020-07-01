@@ -1,0 +1,26 @@
+---
+
+- name: kubernetes.yml | etcd role
+  hosts: etcd
+  gather_facts: yes
+  vars:
+    - dirconfig: /home/{{ ansible_user }}/.infrastructure
+  pre_tasks:
+    - name: Create directory {{ dirconfig }}/temp
+      file:
+        path: '{{ dirconfig }}'/temp
+        state: directory
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+        mode: 0755
+      become: yes
+
+  roles:
+    - { role: etcd, tags: ['binaries','token','services'] }
+
+  post_tasks:
+    - name: Remove {{ dirconfig }}/temp
+      file:
+        path: {{ dirconfig }}/temp
+        state: absent
+

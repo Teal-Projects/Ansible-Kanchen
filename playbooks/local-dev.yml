@@ -1,0 +1,7 @@
+---
+- name: Dev
+  hosts: 127.0.0.1
+  connection: local  
+
+  roles:
+    - { role: ansible-role-dev_setup, tags: ["bash"] }
